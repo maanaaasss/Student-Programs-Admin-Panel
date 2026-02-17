@@ -1,5 +1,18 @@
 # Student Programs Admin Panel
 
+A comprehensive admin panel for managing student programs, task submissions, certificates, redemptions, payouts, and referral tracking.
+
+## 📋 Table of Contents
+
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Documentation](#-documentation)
+- [Project Structure](#project-structure)
+- [Components](#components)
+- [Development](#-development)
+- [Deployment](#-deployment)
+- [Contributing](#-contributing)
+
 ## Features
 
 - **Admin Authentication** - Secure login with JWT-based authentication
@@ -21,12 +34,16 @@
 - ✅ Component-based architecture
 - ✅ Clean, professional UI/UX
 
-## Prerequisites
+## Quick Start
+
+### Prerequisites
 
 - Node.js 18+ installed
 - npm or yarn package manager
+- Supabase account (for database)
+- Resend account (for email service)
 
-## Installation
+### Installation
 
 1. **Clone the repository**
 
@@ -48,14 +65,19 @@
    ```bash
    cp .env.example .env.local
    ```
+   
+   See **[Environment Variables Setup](./ENV_SETUP.md)** for detailed configuration.
 
 4. **Set up the database**
 
-   Run the SQL schema in your Supabase project:
+   Follow the **[Database Setup Guide](./database/README.md)** to:
+   - Create tables and relationships
+   - Set up Row Level Security (RLS) policies
+   - Seed demo data for testing
    
    ```bash
-   # The schema is located at database/schema.sql
-   # Execute it in your Supabase SQL editor
+   # Execute the schema in your Supabase SQL editor
+   # Located at: database/schema.sql
    ```
 
 5. **Run the development server**
@@ -67,12 +89,76 @@
 6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## Demo Credentials
+### Demo Credentials
 
 For testing purposes, use these credentials:
 
 - **Email:** `admin@studentprograms.com`
 - **Password:** `admin123`
+
+> **Note:** After setting up the database, you can use the demo data in [database/DEMO-SETUP.md](./database/DEMO-SETUP.md) to populate your database with sample users, tasks, and submissions.
+
+## 📚 Documentation
+
+### Essential Guides
+
+| Document | Description |
+|----------|-------------|
+| **[API Documentation](./API.md)** | Complete REST API reference with all endpoints, request/response formats, authentication, and code examples |
+| **[Database Setup](./database/README.md)** | Database schema, table relationships, RLS policies, and setup instructions |
+| **[Demo Data Guide](./database/DEMO-SETUP.md)** | Comprehensive demo data for testing all features including users, tasks, submissions, and referrals |
+| **[Environment Variables](./ENV_SETUP.md)** | Detailed guide for configuring all environment variables with examples and troubleshooting |
+| **[Deployment Guide](./DEPLOYMENT.md)** | Step-by-step instructions for deploying to Vercel with production best practices |
+
+### API Documentation
+
+The **[API Documentation](./API.md)** covers:
+
+- **Authentication Endpoints** - Login, token validation
+- **User Management** - CRUD operations, referral tracking
+- **Task Management** - Task creation and listing
+- **Submission Handling** - Approve/reject workflows, status updates
+- **Certificate Management** - Generation, email delivery, resending
+- **Redemption Processing** - Point redemption approval/rejection
+- **Payout Tracking** - Status updates and transaction management
+- **Dashboard Analytics** - Statistics and metrics endpoints
+
+Each endpoint includes:
+- HTTP method and path
+- Request parameters and body schema
+- Response format with examples
+- Authentication requirements
+- Error handling
+
+### Database Documentation
+
+The **[Database Setup Guide](./database/README.md)** includes:
+
+- **Complete Schema** - All tables, columns, and data types
+- **Relationships** - Foreign keys and table connections
+- **RLS Policies** - Security policies for data access
+- **Indexes** - Performance optimization
+- **Triggers** - Automated database operations
+- **Setup Instructions** - Step-by-step database initialization
+
+**Key Tables:**
+- `users` - Student and admin accounts
+- `tasks` - Available program tasks
+- `task_submissions` - Student task submissions
+- `certificates` - Generated certificates
+- `redeem_requests` - Point redemption requests
+- `payouts` - Payment tracking
+- `referrals` - Referral relationships
+
+### Demo Data
+
+The **[Demo Data Guide](./database/DEMO-SETUP.md)** provides:
+
+- Ready-to-use SQL insert statements
+- Sample data for all features
+- Realistic test scenarios
+- Referral network examples
+- Complete workflow testing data
 
 ## Project Structure
 
@@ -88,6 +174,8 @@ src/
 │   │   ├── referrals/       # Referral tracking
 │   │   ├── login/           # Login page
 │   │   └── layout.tsx       # Admin layout with sidebar
+│   ├── api/                 # API Routes (see API.md)
+│   │   └── admin/          # Admin API endpoints
 │   ├── globals.css          # Global styles
 │   └── layout.tsx           # Root layout
 ├── components/
@@ -98,12 +186,21 @@ src/
 │       ├── table.tsx
 │       └── badge.tsx
 ├── lib/
+│   ├── db/                  # Database utilities
+│   │   └── supabase.ts     # Supabase client & queries
 │   ├── auth.ts              # Authentication utilities
-│   ├── utils.ts             # Helper functions
-│   └── data/
-│       └── template-data.ts # Demo data
-└── types/
-    └── index.ts             # TypeScript type definitions
+│   ├── email.ts             # Email service (Resend)
+│   └── utils.ts             # Helper functions
+├── types/
+│   └── index.ts             # TypeScript type definitions
+├── database/                # Database files
+│   ├── schema.sql          # Complete database schema
+│   ├── README.md           # Database documentation
+│   └── DEMO-SETUP.md       # Demo data setup
+└── docs/
+    ├── API.md              # API documentation
+    ├── DEPLOYMENT.md       # Deployment guide
+    └── ENV_SETUP.md        # Environment setup
 ```
 
 ## Components
@@ -151,6 +248,67 @@ src/
 - Track referral counts
 - Visualize referral networks
 
+## 🔌 API & Database
+
+### API Endpoints
+
+The application provides RESTful API endpoints for all operations. See **[API.md](./API.md)** for complete documentation.
+
+**Key endpoint categories:**
+- `/api/admin/auth` - Authentication
+- `/api/admin/users` - User management
+- `/api/admin/tasks` - Task management
+- `/api/admin/submissions` - Submission handling
+- `/api/admin/certificates` - Certificate operations
+- `/api/admin/redeem-requests` - Redemption processing
+- `/api/admin/payouts` - Payout tracking
+- `/api/admin/dashboard` - Analytics
+
+### Database Schema
+
+PostgreSQL database via Supabase with:
+- **8 core tables** with proper relationships
+- **Row Level Security (RLS)** for data protection
+- **Indexes** for query optimization
+- **Triggers** for automated operations
+
+See **[database/README.md](./database/README.md)** for complete schema and setup.
+
+## 🚀 Deployment
+
+### Deploy to Vercel
+
+This project is optimized for Vercel deployment:
+
+1. **Push to GitHub**
+   ```bash
+   git push origin main
+   ```
+
+2. **Import to Vercel**
+   - Visit [vercel.com](https://vercel.com)
+   - Import your repository
+   - Configure environment variables
+   - Deploy
+
+3. **Configure Production**
+   - Set up Supabase for production
+   - Verify domain in Resend
+   - Update environment variables
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for detailed instructions.
+
+### Environment Variables
+
+Required environment variables:
+- `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anonymous key
+- `JWT_SECRET` - JWT signing secret
+- `RESEND_API_KEY` - Resend email API key
+- `NEXT_PUBLIC_APP_URL` - Application URL
+
+See **[ENV_SETUP.md](./ENV_SETUP.md)** for detailed configuration.
+
 ## 📚 Documentation
 
 - **[API Documentation](./API.md)** - Complete API reference with endpoints, request/response formats, and examples
@@ -184,21 +342,7 @@ npm start
 npm run lint
 ```
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with [Next.js](https://nextjs.org/)
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
