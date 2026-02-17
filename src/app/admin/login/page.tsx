@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
+import { Lock, Mail, Shield } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -19,7 +20,6 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      // Call backend API
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,77 +29,103 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (response.ok && data.success) {
-        // Store token and admin info
         localStorage.setItem('adminToken', data.token)
         localStorage.setItem('admin', JSON.stringify(data.admin))
         router.push('/admin/dashboard')
       } else {
-        setError(data.error || 'Invalid email or password')
+        setError(data.error || 'Invalid credentials')
       }
     } catch (err) {
-      setError('Failed to connect to server')
+      setError('Connection failed')
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Admin Panel
-          </CardTitle>
-          <CardDescription className="text-base">
-            Student Programs Management System
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@studentprograms.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium">
-                Password
-              </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={isLoading}
-              />
-            </div>
-            {error && (
-              <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                {error}
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+      <div className="w-full max-w-md space-y-8">
+        {/* Logo */}
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-600 rounded-xl mb-4">
+            <Shield className="h-7 w-7 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900">Admin Login</h1>
+        </div>
+
+        {/* Login Card */}
+        <Card className="border-slate-200 shadow-sm">
+          <CardContent className="pt-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="admin@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="pl-10"
+                  />
+                </div>
               </div>
-            )}
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Signing in...' : 'Sign In'}
-            </Button>
-            <div className="mt-4 rounded-md bg-blue-50 p-3 text-xs text-blue-900">
-              <p className="font-semibold mb-1">Demo Credentials:</p>
-              <p>Email: admin@studentprograms.com</p>
-              <p>Password: admin123</p>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+              
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
+              <Button 
+                type="submit" 
+                className="w-full bg-blue-600 hover:bg-blue-700" 
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Signing in...
+                  </span>
+                ) : (
+                  'Sign In'
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Demo Note */}
+        <div className="text-center">
+          <p className="text-xs text-slate-500">
+            Demo: admin@studentprograms.com / admin123
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

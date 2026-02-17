@@ -1,5 +1,8 @@
+'use client'
+
 import * as React from 'react'
 import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 interface DialogProps {
   open: boolean
@@ -8,17 +11,37 @@ interface DialogProps {
 }
 
 export function Dialog({ open, onOpenChange, children }: DialogProps) {
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) {
+        onOpenChange(false)
+      }
+    }
+
+    // Lock body scroll when dialog is open
+    if (open) {
+      document.body.style.overflow = 'hidden'
+      document.addEventListener('keydown', handleEscape)
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [open, onOpenChange])
+
   if (!open) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
+      {/* Backdrop with blur */}
       <div
-        className="fixed inset-0 bg-black/50"
+        className="fixed inset-0 bg-black/20 backdrop-blur-sm animate-fadeIn"
         onClick={() => onOpenChange(false)}
       />
-      {/* Dialog */}
-      <div className="relative z-50 w-full max-w-lg mx-4">
+      
+      {/* Dialog content */}
+      <div className="relative z-50 w-full">
         {children}
       </div>
     </div>
@@ -30,9 +53,22 @@ interface DialogContentProps {
   className?: string
 }
 
-export function DialogContent({ children, className = '' }: DialogContentProps) {
+export function DialogContent({ children, className }: DialogContentProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-xl ${className}`}>
+    <div
+      className={cn(
+        // Mobile: full screen
+        'fixed inset-0 bg-white',
+        // Tablet+: centered modal
+        'md:relative md:inset-auto md:max-w-lg md:mx-auto md:rounded-lg md:shadow-xl md:border md:border-slate-200',
+        // Animation
+        'animate-scaleIn',
+        // Overflow
+        'overflow-y-auto max-h-screen',
+        className
+      )}
+      onClick={(e) => e.stopPropagation()}
+    >
       {children}
     </div>
   )
@@ -40,11 +76,12 @@ export function DialogContent({ children, className = '' }: DialogContentProps) 
 
 interface DialogHeaderProps {
   children: React.ReactNode
+  className?: string
 }
 
-export function DialogHeader({ children }: DialogHeaderProps) {
+export function DialogHeader({ children, className }: DialogHeaderProps) {
   return (
-    <div className="px-6 py-4 border-b border-gray-200">
+    <div className={cn('sticky top-0 bg-white z-10 border-b border-slate-200 px-6 py-4', className)}>
       {children}
     </div>
   )
@@ -52,11 +89,12 @@ export function DialogHeader({ children }: DialogHeaderProps) {
 
 interface DialogTitleProps {
   children: React.ReactNode
+  className?: string
 }
 
-export function DialogTitle({ children }: DialogTitleProps) {
+export function DialogTitle({ children, className }: DialogTitleProps) {
   return (
-    <h2 className="text-lg font-semibold text-gray-900">
+    <h2 className={cn('text-lg font-semibold text-slate-900', className)}>
       {children}
     </h2>
   )
@@ -64,11 +102,12 @@ export function DialogTitle({ children }: DialogTitleProps) {
 
 interface DialogDescriptionProps {
   children: React.ReactNode
+  className?: string
 }
 
-export function DialogDescription({ children }: DialogDescriptionProps) {
+export function DialogDescription({ children, className }: DialogDescriptionProps) {
   return (
-    <p className="text-sm text-gray-500 mt-1">
+    <p className={cn('text-sm text-slate-600 mt-1', className)}>
       {children}
     </p>
   )
@@ -76,12 +115,25 @@ export function DialogDescription({ children }: DialogDescriptionProps) {
 
 interface DialogFooterProps {
   children: React.ReactNode
+  className?: string
 }
 
-export function DialogFooter({ children }: DialogFooterProps) {
+export function DialogFooter({ children, className }: DialogFooterProps) {
   return (
-    <div className="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+    <div className={cn('sticky bottom-0 bg-white border-t border-slate-200 px-6 py-4 flex gap-3 justify-end', className)}>
       {children}
     </div>
+  )
+}
+
+export function DialogClose({ onClose }: { onClose: () => void }) {
+  return (
+    <button
+      onClick={onClose}
+      className="absolute right-4 top-4 rounded-md p-2 hover:bg-slate-100 transition-colors duration-150"
+    >
+      <X className="h-4 w-4" />
+      <span className="sr-only">Close</span>
+    </button>
   )
 }
