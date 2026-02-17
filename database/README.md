@@ -112,6 +112,41 @@ After seeding:
 
 **⚠️ IMPORTANT**: Change this password in production!
 
+## Demo Database Setup (Alternative)
+
+For a comprehensive demo with realistic data covering all features, use the demo seed file instead:
+
+### Quick Setup with Demo Data
+
+```bash
+# Run the automated setup script
+./scripts/setup-demo-db.sh
+```
+
+Or manually:
+
+```bash
+# In Supabase SQL Editor, run:
+# 1. database/schema.sql
+# 2. database/seed-demo.sql
+```
+
+### What's Included in Demo Data
+
+The `seed-demo.sql` includes:
+
+- **7 Students** with varying point levels, referral relationships, and activity
+- **6 Tasks** with different point values (50-300 points)
+- **9 Task Submissions** (2 pending, 6 approved, 1 rejected)
+- **6 Certificates** (5 sent, 1 resent, 1 not sent)
+- **4 Redeem Requests** (2 pending, 1 approved, 1 rejected)
+- **3 Payouts** (2 pending, 1 completed)
+- **4 Referral Chains** showing complete referral trees
+
+This data supports demonstrating **ALL admin panel features** without manual data creation.
+
+📖 For detailed information about demo data, see the [Demo Setup Guide](./DEMO-SETUP.md)
+
 ## Next Steps
 
 Once database is set up:

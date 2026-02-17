@@ -1,10 +1,6 @@
 # Student Programs Admin Panel
 
-A comprehensive web-based admin panel for managing a Student Referral & Rewards Program. Built with Next.js 15, TypeScript, and Tailwind CSS.
-
-## 🚀 Features
-
-### Core Functionality
+## Features
 
 - **Admin Authentication** - Secure login with JWT-based authentication
 - **Dashboard** - Real-time statistics and activity overview
@@ -25,17 +21,17 @@ A comprehensive web-based admin panel for managing a Student Referral & Rewards 
 - ✅ Component-based architecture
 - ✅ Clean, professional UI/UX
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js 18+ installed
 - npm or yarn package manager
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/maanaaasss/Student-Programs-Admin-Panel
    cd Student-Programs-Admin-Panel
    ```
 
@@ -71,14 +67,14 @@ A comprehensive web-based admin panel for managing a Student Referral & Rewards 
 6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🔐 Demo Credentials
+## Demo Credentials
 
 For testing purposes, use these credentials:
 
 - **Email:** `admin@studentprograms.com`
 - **Password:** `admin123`
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -110,7 +106,7 @@ src/
     └── index.ts             # TypeScript type definitions
 ```
 
-## 🎨 Key Components
+## Components
 
 ### Dashboard
 
@@ -155,130 +151,56 @@ src/
 - Track referral counts
 - Visualize referral networks
 
-## 🔧 Configuration
+## 📚 Documentation
 
-### Environment Variables
+- **[API Documentation](./API.md)** - Complete API reference with endpoints, request/response formats, and examples
+- **[Database Setup](./database/README.md)** - Database schema and setup instructions
+- **[Demo Data Guide](./database/DEMO-SETUP.md)** - Comprehensive demo data for testing all features
 
-Create a `.env.local` file in the root directory with the following variables:
+## 🚀 Development
 
-```env
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+### Tech Stack
 
-# JWT Secret for authentication
-JWT_SECRET=your_jwt_secret
+- **Frontend:** Next.js 15, React, TypeScript, Tailwind CSS
+- **Backend:** Next.js API Routes
+- **Database:** PostgreSQL (via Supabase)
+- **Authentication:** JWT
+- **Email:** Resend
+- **Deployment:** Vercel (recommended)
 
-# Email Service (Resend)
-RESEND_API_KEY=your_resend_api_key
-
-# Application URL
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-**Important:** 
-- Get your Supabase credentials from [supabase.com](https://supabase.com)
-- Get your Resend API key from [resend.com](https://resend.com) to enable certificate emails
-- Update the `from` email address in `src/lib/email.ts` to match your verified domain in Resend
-
-### Tailwind Configuration
-
-Custom color scheme defined in `tailwind.config.js`:
-
-- Primary: Blue (#3B82F6)
-- Secondary: Slate gray
-- Success: Green
-- Warning: Yellow
-- Destructive: Red
-
-## 📦 Available Scripts
+### Available Scripts
 
 ```bash
-# Development
-npm run dev          # Start development server
+# Development server
+npm run dev
 
-# Production
-npm run build        # Build for production
-npm start            # Start production server
-
-# Linting
-npm run lint         # Run ESLint
-```
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Deploy with one click
-
-### Other Platforms
-
-Build the production bundle:
-
-```bash
+# Production build
 npm run build
+
+# Start production server
 npm start
+
+# Lint code
+npm run lint
 ```
-
-## 🔮 Future Enhancements
-
-### Phase 1 (Immediate)
-
-- [ ] Certificate PDF generation service
-- [ ] Advanced filtering and search
-- [ ] Export data to CSV/Excel
-- [ ] Notification system
-
-### Phase 2 (Short-term)
-
-- [ ] Analytics and reporting
-- [ ] Bulk operations
-- [ ] Role-based access control
-- [ ] Audit logs
-
-### Phase 3 (Long-term)
-
-- [ ] Mobile app integration
-- [ ] Real-time notifications
-- [ ] Advanced analytics dashboard
-- [ ] Multi-language support
-
-## 🛡️ Security Notes
-
-> **✅ Production Ready:** This application includes:
->
-> - JWT-based authentication
-> - Secure session management
-> - Environment variables for sensitive data
-> - Database-backed user management
->
-> **For production deployment, ensure:**
-> - Use strong JWT secrets
-> - Enable HTTPS
-> - Configure CORS properly
-> - Implement rate limiting
-> - Set up proper database backups
-
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a pull request
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📞 Support
+## 📝 License
 
-For issues or questions, please open an issue on GitHub.
+This project is licensed under the MIT License.
 
----
+## 🙏 Acknowledgments
 
-**Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Database by [Supabase](https://supabase.com/)
+- Icons from [Lucide](https://lucide.dev/)
