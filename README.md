@@ -2,7 +2,7 @@
 
 A comprehensive admin panel for managing student programs, task submissions, certificates, redemptions, payouts, and referral tracking.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Quick Start](#quick-start)
@@ -98,7 +98,7 @@ For testing purposes, use these credentials:
 
 > **Note:** After setting up the database, you can use the demo data in [database/DEMO-SETUP.md](./database/DEMO-SETUP.md) to populate your database with sample users, tasks, and submissions.
 
-## 📚 Documentation
+## Documentation
 
 ### Essential Guides
 
@@ -248,7 +248,7 @@ src/
 - Track referral counts
 - Visualize referral networks
 
-## 🔌 API & Database
+## API & Database
 
 ### API Endpoints
 
@@ -274,7 +274,7 @@ PostgreSQL database via Supabase with:
 
 See **[database/README.md](./database/README.md)** for complete schema and setup.
 
-## 🚀 Deployment
+## Deployment
 
 ### Deploy to Vercel
 
@@ -309,13 +309,13 @@ Required environment variables:
 
 See **[ENV_SETUP.md](./ENV_SETUP.md)** for detailed configuration.
 
-## 📚 Documentation
+## Documentation
 
 - **[API Documentation](./API.md)** - Complete API reference with endpoints, request/response formats, and examples
 - **[Database Setup](./database/README.md)** - Database schema and setup instructions
 - **[Demo Data Guide](./database/DEMO-SETUP.md)** - Comprehensive demo data for testing all features
 
-## 🚀 Development
+## Development
 
 ### Tech Stack
 
